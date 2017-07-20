@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NiteOut</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+<!-- Google Places library -->
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA2ccd8RZGhMmTyN2PZU8FKpzneH3LIld4&libraries=places"></script>
+<!--jQuery -->
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<!-- our JS main file -->
+    <script type="text/javascript" language="javascript" src="assets/javascript/logic.js"></script>
+<!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+<!-- Materialize Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+<!-- Materialize Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+<!-- Moment JS -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+</head>
+
+<body class="blue darken-4">
+<header>
+  <nav class="black">
+    <div class="nav-wrapper">
+      <img src="assets/images/NiteOut_logo.png" class="brand-logo">
+    </div>
+  </nav>
+</header>
+
+<main>
+<div class="container">
+  <!-- SEARCH FORM -->
+<div class="row">
+  <form class="card-panel white" id="searchForm">
+  <h5>Search for local events and restaurants!</h5>
+    <div class="row">
+      <div class="input-field col m4">
+        <input type="text" id="city">
+        <label for="city">City*</label>
+      </div>
+      <div class="input-field col m4">
+        <input type="text" id="state">
+        <label for="city">State, abbrev.*</label>
+      </div>
+      <div class="input-field col m4">
+        <input type="date" id="date" class="datepicker">
+      </div>
+      <div class="input-field col m4">
+        <select id="eventCategory">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1" data-event="art" data-groupon="things-to-do">Arts</option>
+          <option value="2" data-event="comedy" data-groupon="things-to-do">Comedy</option>
+          <option value="3" data-event="family_fun_kids" data-groupon="things-to-do">Family Fun</option>
+          <option value="3" data-event="festivals_parades" data-groupon="things-to-do">Festivals</option>
+          <option value="5" data-event="music" data-groupon="things-to-do">Music</option>
+          <option value="6" data-event="performing_arts" data-groupon="things-to-do">Preforming Arts</option>
+          <option value="7" data-event="singles_social" data-groupon="things-to-do">Singles</option>
+          <option value="8" data-event="sports" data-groupon="things-to-do">Sports</option>
+        </select>
+      <label>Local Events*</label>
+      </div>
+      <!-- dropdown for Open Table -->
+      <div class="input-field col m4">
+        <select id="foodCategory">
+          <option value="" disabled selected>Choose your option</option>
+          <option value="1" data-food>Fast Casual</option>
+          <option value="2" data-food>Sit Down</option>
+          <option value="3" data-food>Fine Dining</option>
+          <option value="4" data-food>Special Occasion</option>
+        </select>
+       <label>Nearby Eats*</label>
+      </div>
+
+      <div class="col m4 center">
+        <button class="btn waves-effect waves-light" type="submit" id="searchBtn" name="action">Submit</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class='row'>
+  <div class="col m6">
+    <!--COLLAPSIBLE LIST STRUCTURE -->
+  <ul id="eventList" class="collapsible" data-collapsible="accordion">
+  </ul>
+
+<!-- OpenTable results -->
+      <div id='meals'>
+        <div class="row">
+
+        <div id="eats0" class="col s12 m12">
+          <div class="card white darken-1">
+            <div class="card-content black-text">
+              <div class="restName"></div>
+              <div class="restAddress"></div>
+              <div class="restCity"></div>
+              <div class="restPhone"></div>
+              <div class="reservLink"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="eats1" class="col s12 m12">
+          <div class="card white darken-1">
+            <div class="card-content black-text">
+              <div class="restName"></div>
+              <div class="restAddress"></div>
+              <div class="restCity"></div>
+              <div class="restPhone"></div>
+              <div class="reservLink"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="eats2" class="col s12 m12">
+          <div class="card white darken-1">
+            <div class="card-content black-text">
+              <div class="restName"></div>
+              <div class="restAddress"></div>
+              <div class="restCity"></div>
+              <div class="restPhone"></div>
+              <div class="reservLink"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="eats3" class="col s12 m12">
+          <div class="card white darken-1">
+            <div class="card-content black-text">
+              <div class="restName"></div>
+              <div class="restAddress"></div>
+              <div class="restCity"></div>
+              <div class="restPhone"></div>
+              <div class="reservLink"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="eats4" class="col s12 m12">
+          <div class="card white darken-1">
+            <div class="card-content black-text">
+              <div class="restName"></div>
+              <div class="restAddress"></div>
+              <div class="restCity"></div>
+              <div class="restPhone"></div>
+              <div class="reservLink"></div>
+            </div>
+        </div>
+        </div>
+
+      </div>
+      </div>
+    </div>
+
+  <div class="col m6">
+
+    <div id='weather' class="card-panel"> </div>
+
+    <div id="map_wrapper">
+          <div id="map_canvas" class="mapping"></div>
+      </div>
+  </div>
+
+
+  <div id="noResults" class="col m6">
+  </div>
+    <div id='deals' class='col m6'>
+      <div class="card-panel"><h5 class="header">Groupon Deals</h5>
+      </div>
+        <div id="card0" class="col m12 m6">
+
+          <div class="card horizontal">
+            <div class="card-image"> 
+            </div>
+              <div class="card-stacked">
+                <div class="card-content">
+                </div>
+                <div class="card-action">
+                </div>
+              </div>
+          </div>
+        </div>
+
+      <div id="card1" class="col m12 m6">
+
+        <div class="card horizontal">
+            <div class="card-image">
+            </div>
+            <div class="card-stacked">
+                <div class="card-content">
+                </div>
+                <div class="card-action">
+                </div>
+            </div>
+        </div>
+      </div>
+      
+      <div id="card2" class="col m12 m6">
+
+        <div class="card horizontal">
+            <div class="card-image">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+              </div>
+              <div class="card-action">
+              </div>
+            </div>
+        </div>
+      </div>
+    <div id='weather'>
+        <div class="card-panel">
+          <span class="white-text">
+          </span>
+        </div>
+    </div>
+
+    <div id="map_wrapper">
+          <div id="map_canvas" class="mapping"></div>
+
+      </div>
+
+      <div id="card3" class="col m12 m6">
+
+        <div class="card horizontal">
+            <div class="card-image">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+              </div>
+              <div class="card-action">
+              </div>
+            </div>
+        </div>
+      </div>
+      <div id="card4" class="col m12 m6">
+
+        <div class="card horizontal">
+            <div class="card-image">
+            </div>
+            <div class="card-stacked">
+              <div class="card-content">
+              </div>
+              <div class="card-action">
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>  
+
+
+ <div class='row'>
+    
+      <form id='contact-form' class="col m6">
+        <div class="card-panel white">
+        <h5>Leave a comment</h5>
+          <div class="row">
+            <div class="input-field col m6">
+              <input id="first_name" type="text">
+              <label for="first_name">First Name</label>
+            </div>
+            <div class="input-field col m6">
+              <input id="last_name" type="text">
+              <label for="last_name">Last Name</label>
+            </div>
+          </div>
+        <div class="row">
+          <div class="input-field col m6">
+            <input id="email" type="email">
+            <label for="email">Email</label>
+          </div>
+          <div class="input-field col m6">
+            <input id="userName" type="text">
+            <label for="userName">User Name</label>
+          </div>
+      </div>
+      <div class="row">
+        <div class="input-field col m6">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Comments</label>
+        </div>
+      </div>
+
+      <button class="btn waves-effect waves-light" type="submit" id="contactFormBtn" name="action">Submit</button>
+  </div>    
+  </form>
+  
+
+      <div class="card col m6">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator" src="assets/images/happy_concert.jpg">
+          </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">Reviews<i class="material-icons right">more_vert</i></span>
+
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">NiteOut<i class="material-icons right">close</i></span>
+          <br>
+            <div id="reviewsReveal"></div>
+        </div>
+    </div>
+ </div>
+
+</div>
+</main>
+
+<footer class="page-footer transparent">
+  <div class="container">
+    <div class="row">
+      <div class="col s12">
+        <p><strong>© 2017 Copyright Weblings</strong></p>
+        <img src="assets/images/weblings.png" class="weblings">
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

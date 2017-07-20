@@ -1,1 +1,1 @@
-# NiteOutApp
+NitOut - A search application that provides local events, restaurants, deals and a weather forecast for specified locations and time periods
